@@ -9,10 +9,14 @@ using std::exception;
 
 namespace ariel
 {   
-    class SizeException : public exception
+    class MessageException : public exception
     {
         public:
-            const char* what() const noexcept {return "Mat size is always odd";}
+            MessageException(string str = "") : _msg(str.c_str()) { }
+            const char* what() const noexcept {return _msg;}
+        private:
+            const char* _msg;
+
     };
     
     string mat(int cols, int rows, char a, char b);

@@ -4,7 +4,7 @@ string ariel::mat(int cols, int rows, char a, char b)
 {
     if (rows % 2 == 0 || cols % 2 == 0)
     {
-        throw SizeException();
+        throw MessageException("Mat size is always odd");
     }
         
     
