@@ -2,9 +2,17 @@
 
 string ariel::mat(int cols, int rows, char a, char b)
 {
+    if (rows <= 0 || cols <= 0)
+    {
+        throw MessageException("the rows and columns must be positive");
+    }
     if (rows % 2 == 0 || cols % 2 == 0)
     {
         throw MessageException("Mat size is always odd");
+    }
+    if (a == ' ' || b == ' ' || !isprint(a) || !isprint(b))
+    {
+        throw MessageException("The symbols must be printable only");
     }
         
     

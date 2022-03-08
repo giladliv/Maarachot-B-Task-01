@@ -1,21 +1,24 @@
 #ifndef MAT_H
 #define MAT_H
 
+#include <iostream>
 #include <string>
 #include <stdexcept>
+#include <cctype>
 
 using std::string;
 using std::exception;
+using namespace std;
 
 namespace ariel
 {   
     class MessageException : public exception
     {
         public:
-            MessageException(string str = "") : _msg(str.c_str()) { }
-            const char* what() const noexcept {return _msg;}
+            MessageException(string str) : _msg(str) { }
+            const char* what() const noexcept {return _msg.c_str();}
         private:
-            const char* _msg;
+            string _msg;
 
     };
     
