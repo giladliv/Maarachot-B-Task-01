@@ -15,6 +15,7 @@ using namespace ariel;
 
 #include <string>
 #include <algorithm>
+#include <ctime>
 using namespace std;
 
 /**
@@ -29,29 +30,89 @@ string nospaces(string input) {
 	return input;
 }
 
+/**
+ * @brief generates a random number between the range of [min, max]
+ * 
+ * @param min 
+ * @param max 
+ * @return int the random number
+ */
+int rand_range(int min, int max)
+{
+    int range = max - min + 1;
+    return rand() % range + min;
+}
 
 TEST_CASE("Good input")
 {
-	CHECK(mat(1, 15, '@', '-') == "");
-    CHECK(mat(17, 5, '&', '*') == "");
-    CHECK(mat(21, 13, '=', '^') == "");
     
-    CHECK(mat(11, 3, '+', '-') == "");
-    CHECK(mat(17, 9, '/', '*') == "");
-    CHECK(mat(11, 23, '#', '%') == "");
-    CHECK(mat(31, 13, 'G', 'L') == "");
+	CHECK(nospaces(mat(1, 15, '@', '-')) == nospaces("@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@"));
+    
+    CHECK(nospaces(mat(17, 5, '&', '*')) == nospaces("&&&&&&&&&&&&&&&&&\n"
+                                                     "&***************&\n"
+                                                     "&*&&&&&&&&&&&&&*&\n"
+                                                     "&***************&\n"
+                                                     "&&&&&&&&&&&&&&&&&"));
+    
+    CHECK(nospaces(mat(13, 11, '+', '-')) == nospaces("+++++++++++++\n"
+                                                      "+-----------+\n"
+                                                      "+-+++++++++-+\n"
+                                                      "+-+-------+-+\n"
+                                                      "+-+-+++++-+-+\n"
+                                                      "+-+-+---+-+-+\n"
+                                                      "+-+-+++++-+-+\n"
+                                                      "+-+-------+-+\n"
+                                                      "+-+++++++++-+\n"
+                                                      "+-----------+\n"
+                                                      "+++++++++++++"));
+    
+    CHECK(nospaces(mat(9, 9, 'G', 'L')) == nospaces("GGGGGGGGG\n"
+                                                    "GLLLLLLLG\n"
+                                                    "GLGGGGGLG\n"
+                                                    "GLGLLLGLG\n"
+                                                    "GLGLGLGLG\n"
+                                                    "GLGLLLGLG\n"
+                                                    "GLGGGGGLG\n"
+                                                    "GLLLLLLLG\n"
+                                                    "GGGGGGGGG"));
 }
 
 TEST_CASE("Good Letters")
 {
+    string str_format = "\t\t\t\t\t\t\t\t\t\n"      // this is the sample of 7x9
+                        "\t\r\r\r\r\r\r\r\t\n"      // the letters are the ones who won't be good for the input
+                        "\t\r\t\t\t\t\t\r\t\n"      // that why i chose them
+                        "\t\r\t\r\r\r\t\r\t\n"
+                        "\t\r\t\t\t\t\t\r\t\n"
+                        "\t\r\r\r\r\r\r\r\t\n"
+                        "\t\t\t\t\t\t\t\t\t";       // i took the regular case and then i changed to the letters
+    
+    string test;
+    
     // according to the ascii table
     // the range of every the good letters (printable) are from 33-126
-    for (int i = 33; i <= 126; i++)
+
+    srand(time(nullptr));       // setting the random by clock
+    char a = '\0', b = '\0';
+    
+
+    for (int i = 0; i < 5; i++)
     {
-        for (int j = 33; j <= 126; j++)
+        a = rand_range(33, 126);        // generates a random char from the good range
+        
+        for (int j = 0; j < 5; j++)
         {
-            CHECK(mat(9, 7, (char)i, (char)j) == "");
+            b = rand_range(33, 126);    // generates a random char from the good range
+            
+            test = str_format;
+            replace(test.begin(), test.end(), '\t', a);     // replace the char '\t' with the good char a
+            replace(test.begin(), test.end(), '\r', b);     // replace the char '\t' with the good char b
+            
+            CHECK(nospaces(mat(9, 7, a, b)) == nospaces(test));
         }
+
+        replace(test.begin(), test.end(), b, a);     // make that the letter will be the same    
+        CHECK(nospaces(mat(9, 7, a, b)) == nospaces(test));
     }
 
 }
@@ -82,12 +143,12 @@ TEST_CASE("Bad Letters")
     {
         if (i < 33 || 126 < i)
         {
-            a = (char)i;
+            a = i;
             for (int j = -64; j < 256; j++)
             {
                 if (j < 33 || 126 < j)
                 {
-                    b = (char)j;
+                    b = j;
                     CHECK_THROWS(mat(9, 7, a, b));
                 }
             }
