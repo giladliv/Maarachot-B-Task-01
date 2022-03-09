@@ -30,15 +30,30 @@ string nospaces(string input) {
 }
 
 
-TEST_CASE("Good input") {
-	CHECK(nospaces(mat(9, 7, '@', '-')) == nospaces( "@@@@@@@@@\n"
-													 "@-------@\n"
-													 "@-@@@@@-@\n"
-													 "@-@---@-@\n"
-													 "@-@@@@@-@\n"
-													 "@-------@\n"
-													 "@@@@@@@@@"));
-	/* Add more test here */
+TEST_CASE("Good input")
+{
+	CHECK(mat(1, 15, '@', '-') == "");
+    CHECK(mat(17, 5, '&', '*') == "");
+    CHECK(mat(21, 13, '=', '^') == "");
+    
+    CHECK(mat(11, 3, '+', '-') == "");
+    CHECK(mat(17, 9, '/', '*') == "");
+    CHECK(mat(12, 23, '#', '%') == "");
+    CHECK(mat(31, 13, 'G', 'L') == "");
+}
+
+TEST_CASE("Good Letters")
+{
+    // according to the ascii table
+    // the range of every the good letters (printable) are from 33-126
+    for (int i = 33; i <= 126; i++)
+    {
+        for (int j = 33; j <= 126; j++)
+        {
+            CHECK(mat(9, 7, (char)i, (char)j) == "");
+        }
+    }
+
 }
 
 TEST_CASE("Bad numbers")
@@ -62,39 +77,21 @@ TEST_CASE("Bad Letters")
 {
     // the range of every the good letters (printable) are from 33-126
     // it means that (< 33) or (126 <) are the bad letters
+    char a = '\0', b = '\0';
     for (int i = -150; i < 256; i++)
     {
         if (i < 33 || 126 < i)
         {
+            a = (char)i;
             for (int j = -64; j < 256; j++)
             {
                 if (j < 33 || 126 < j)
                 {
-                    CHECK_THROWS(mat(9, 7, i, j));
+                    b = (char)j;
+                    CHECK_THROWS(mat(9, 7, a, b));
                 }
             }
         }
     }
 
 }
-
-TEST_CASE("Good Letters")
-{
-    // the range of every the good letters (printable) are from 33-126
-    for (int i = 33; i <= 126; i++)
-    {
-        for (int j = 33; j <= 126; j++)
-        {
-            CHECK(mat(9, 7, i, j) == string());
-        }
-    }
-
-}
-
-TEST_CASE("Bad input") {
-    CHECK_THROWS(mat(10, 5, '$', '%'));
-    /* Add more test here */
-}
-
-
-/* Add more test cases here */
