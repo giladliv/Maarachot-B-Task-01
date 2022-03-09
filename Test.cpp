@@ -38,7 +38,7 @@ TEST_CASE("Good input")
     
     CHECK(mat(11, 3, '+', '-') == "");
     CHECK(mat(17, 9, '/', '*') == "");
-    CHECK(mat(12, 23, '#', '%') == "");
+    CHECK(mat(11, 23, '#', '%') == "");
     CHECK(mat(31, 13, 'G', 'L') == "");
 }
 
