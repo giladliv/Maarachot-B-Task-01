@@ -111,8 +111,8 @@ TEST_CASE("Good Letters")
             CHECK(nospaces(mat(9, 7, a, b)) == nospaces(test));
         }
 
-        replace(test.begin(), test.end(), b, a);     // make that the letter will be the same    
-        CHECK(nospaces(mat(9, 7, a, b)) == nospaces(test));
+        replace(test.begin(), test.end(), b, a);     // make that the letter will be the same - b becomes to a
+        CHECK(nospaces(mat(9, 7, a, a)) == nospaces(test));
     }
 
 }
