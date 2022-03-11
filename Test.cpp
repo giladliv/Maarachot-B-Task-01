@@ -22,7 +22,7 @@ using namespace std;
  * Returns the input string without the whitespace characters: space, newline and tab.
  * Requires std=c++2a.
  */
-string nospaces(string input) {
+string gl_nospaces(string input) {
 	std::erase(input, ' ');
 	std::erase(input, '\t');
 	std::erase(input, '\n');
@@ -46,15 +46,15 @@ int rand_range(int min, int max)
 TEST_CASE("Good input")
 {
     
-	CHECK(nospaces(mat(1, 15, '@', '-')) == nospaces("@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@"));
+	CHECK(gl_nospaces(mat(1, 15, '@', '-')) == gl_nospaces("@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@\n@"));
     
-    CHECK(nospaces(mat(17, 5, '&', '*')) == nospaces("&&&&&&&&&&&&&&&&&\n"
+    CHECK(gl_nospaces(mat(17, 5, '&', '*')) == gl_nospaces("&&&&&&&&&&&&&&&&&\n"
                                                      "&***************&\n"
                                                      "&*&&&&&&&&&&&&&*&\n"
                                                      "&***************&\n"
                                                      "&&&&&&&&&&&&&&&&&"));
     
-    CHECK(nospaces(mat(13, 11, '+', '-')) == nospaces("+++++++++++++\n"
+    CHECK(gl_nospaces(mat(13, 11, '+', '-')) == gl_nospaces("+++++++++++++\n"
                                                       "+-----------+\n"
                                                       "+-+++++++++-+\n"
                                                       "+-+-------+-+\n"
@@ -66,7 +66,7 @@ TEST_CASE("Good input")
                                                       "+-----------+\n"
                                                       "+++++++++++++"));
     
-    CHECK(nospaces(mat(9, 9, 'G', 'L')) == nospaces("GGGGGGGGG\n"
+    CHECK(gl_nospaces(mat(9, 9, 'G', 'L')) == gl_nospaces("GGGGGGGGG\n"
                                                     "GLLLLLLLG\n"
                                                     "GLGGGGGLG\n"
                                                     "GLGLLLGLG\n"
@@ -108,11 +108,11 @@ TEST_CASE("Good Letters")
             replace(test.begin(), test.end(), '\t', a);     // replace the char '\t' with the good char a
             replace(test.begin(), test.end(), '\r', b);     // replace the char '\t' with the good char b
             
-            CHECK(nospaces(mat(9, 7, a, b)) == nospaces(test));
+            CHECK(gl_nospaces(mat(9, 7, a, b)) == gl_nospaces(test));
         }
 
-        replace(test.begin(), test.end(), b, a);     // make that the letter will be the same - b becomes to a
-        CHECK(nospaces(mat(9, 7, a, a)) == nospaces(test));
+        replace(test.begin(), test.end(), b, a);     // make that the letter will be the same    
+        CHECK(gl_nospaces(mat(9, 7, a, b)) == gl_nospaces(test));
     }
 
 }
