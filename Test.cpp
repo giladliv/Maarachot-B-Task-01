@@ -112,7 +112,7 @@ TEST_CASE("Known structure")
         }
 
         replace(test.begin(), test.end(), b, a);     // make that the letter will be the same    
-        CHECK(gl_nospaces(mat(9, 7, a, b)) == gl_nospaces(test));
+        CHECK(gl_nospaces(mat(9, 7, a, a)) == gl_nospaces(test));
     }
 
 }
