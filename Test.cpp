@@ -77,7 +77,7 @@ TEST_CASE("Good input")
                                                     "GGGGGGGGG"));
 }
 
-TEST_CASE("Good Letters")
+TEST_CASE("Known structure")
 {
     string str_format = "\t\t\t\t\t\t\t\t\t\n"      // this is the sample of 7x9
                         "\t\r\r\r\r\r\r\r\t\n"      // the letters are the ones who won't be good for the input
@@ -132,27 +132,4 @@ TEST_CASE("Bad numbers")
     CHECK_THROWS(mat(4, 0, '/', '*'));          // left is 0
     CHECK_THROWS(mat(0, 0, '#', '%'));          // both are 0
     CHECK_THROWS(mat(-2, 0, 'G', 'L'));         // both are 0
-}
-
-TEST_CASE("Bad Letters")
-{
-    // the range of every the good letters (printable) are from 33-126
-    // it means that (< 33) or (126 <) are the bad letters
-    char a = '\0', b = '\0';
-    for (int i = -150; i < 256; i++)
-    {
-        if (i < 33 || 126 < i)
-        {
-            a = i;
-            for (int j = -64; j < 256; j++)
-            {
-                if (j < 33 || 126 < j)
-                {
-                    b = j;
-                    CHECK_THROWS(mat(9, 7, a, b));
-                }
-            }
-        }
-    }
-
 }
