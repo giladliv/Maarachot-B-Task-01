@@ -77,7 +77,7 @@ TEST_CASE("Good input")
                                                     "GGGGGGGGG"));
 }
 
-TEST_CASE("Known structure")
+TEST_CASE("Good Letters")
 {
     string str_format = "\t\t\t\t\t\t\t\t\t\n"      // this is the sample of 7x9
                         "\t\r\r\r\r\r\r\r\t\n"      // the letters are the ones who won't be good for the input
